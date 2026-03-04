@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Birthday Surprise</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@500&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+<style>
+
+body{
+margin:0;
+font-family:'Poppins',sans-serif;
+color:white;
+background:#0c0a09;
+overflow-x:hidden;
+}
+
+/* background */
+
+.bg{
+position:fixed;
+inset:0;
+background:
+radial-gradient(circle at 20% 30%,rgba(255,80,120,.5),transparent 40%),
+radial-gradient(circle at 80% 20%,rgba(150,80,255,.5),transparent 40%),
+radial-gradient(circle at 50% 80%,rgba(80,150,255,.5),transparent 40%);
+filter:blur(90px);
+animation:move 12s infinite alternate;
+z-index:-1;
+}
+
+@keyframes move{
+0%{transform:scale(1)}
+100%{transform:scale(1.2)}
+}
+
+/* page */
+
+.page{
+display:none;
+min-height:100vh;
+align-items:center;
+justify-content:center;
+flex-direction:column;
+text-align:center;
+padding:60px 20px;
+}
+
+/* headings */
+
+.title{
+font-family:'Great Vibes',cursive;
+font-size:64px;
+margin-bottom:10px;
+}
+
+.subtitle{
+font-family:'Playfair Display',serif;
+font-size:26px;
+}
+
+/* button */
+
+button{
+background:linear-gradient(90deg,#ff4d88,#ff1744);
+border:none;
+padding:14px 30px;
+border-radius:30px;
+color:white;
+font-size:16px;
+margin-top:30px;
+cursor:pointer;
+transition:.25s;
+}
+
+button:hover{
+transform:scale(1.05);
+}
+
+/* images */
+
+.mainImg{
+width:320px;
+max-width:90%;
+border-radius:14px;
+margin-top:25px;
+box-shadow:0 15px 40px rgba(0,0,0,.6);
+}
+
+/* animated text */
+
+.list{
+margin-top:20px;
+font-size:20px;
+line-height:40px;
+}
+
+.fade{
+opacity:0;
+transform:translateY(20px);
+animation:fadeUp 1s forwards;
+}
+
+.fade:nth-child(1){animation-delay:.3s}
+.fade:nth-child(2){animation-delay:.6s}
+.fade:nth-child(3){animation-delay:.9s}
+.fade:nth-child(4){animation-delay:1.2s}
+
+@keyframes fadeUp{
+to{opacity:1;transform:translateY(0);}
+}
+
+/* gallery */
+
+.gallery{
+display:grid;
+grid-template-columns:repeat(2,1fr);
+gap:20px;
+max-width:700px;
+margin-top:30px;
+}
+
+.card{
+position:relative;
+overflow:hidden;
+border-radius:12px;
+}
+
+.card img{
+width:100%;
+display:block;
+}
+
+.overlay{
+position:absolute;
+bottom:0;
+left:0;
+right:0;
+background:rgba(0,0,0,0.7);
+padding:12px;
+font-size:15px;
+opacity:0;
+transition:.4s;
+}
+
+.card:hover .overlay{
+opacity:1;
+}
+
+/* page 6 */
+
+.rowImages{
+display:flex;
+gap:20px;
+flex-wrap:wrap;
+justify-content:center;
+margin-top:20px;
+}
+
+.rowImages img{
+width:260px;
+border-radius:14px;
+}
+
+/* message */
+
+.message{
+max-width:700px;
+font-size:20px;
+line-height:32px;
+margin-top:30px;
+min-height:120px;
+}
+
+/* hearts */
+
+.heart{
+position:fixed;
+bottom:-50px;
+font-size:24px;
+animation:float 6s linear infinite;
+}
+
+@keyframes float{
+0%{transform:translateY(0);opacity:1}
+100%{transform:translateY(-100vh);opacity:0}
+}
+
+/* countdown */
+
+.countdown{
+font-size:28px;
+margin-top:20px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="bg"></div>
+
+<!-- BACKGROUND MUSIC -->
+
+<audio id="bgMusic" loop>
+<source src="music/M1.m4a" type="audio/mp4">
+</audio>
+
+<!-- COUNTDOWN PAGE -->
+
+<div id="countdownPage" class="page">
+
+<h1 class="title">A Special Day Is Coming</h1>
+
+<div id="timer" class="countdown"></div>
+
+<button id="enterBtn" onclick="showPage(1)" style="display:none">
+Open Surprise
+</button>
+
+</div>
+
+<!-- PAGE 1 -->
+
+<div id="page1" class="page">
+<h1 class="title">For Humaira ❤️</h1>
+<p class="subtitle">A little surprise is waiting for you</p>
+<button onclick="startMusic();showPage(2)">Start Surprise</button>
+</div>
+
+<!-- PAGE 2 -->
+
+<div id="page2" class="page">
+<h1 class="title">A Special Surprise</h1>
+<p class="subtitle">I made something just for you</p>
+<img src="images/1.jpg" class="mainImg">
+<button onclick="showPage(3)">Open Your Surprise</button>
+</div>
+
+<!-- PAGE 3 -->
+
+<div id="page3" class="page">
+<h1 class="title">Happy Birthday Humaira ❤️</h1>
+<p class="subtitle">Today is all about celebrating you</p>
+
+<img src="images/2.jpeg" class="mainImg">
+
+<div class="list">
+<div class="fade">✨ Your smile brightens every moment</div>
+<div class="fade">💖 Your heart is full of kindness</div>
+<div class="fade">😊 You make everything feel happier</div>
+<div class="fade">🌸 You are truly one of a kind</div>
+</div>
+
+<button onclick="showPage(4)">Next</button>
+
+</div>
+
+<!-- PAGE 4 -->
+
+<div id="page4" class="page">
+
+<h1 class="title">Things I Like About You</h1>
+
+<img src="images/3.jpg" class="mainImg">
+
+<div class="list">
+<div class="fade">✨ Your beautiful smile</div>
+<div class="fade">💖 Your kind heart</div>
+<div class="fade">😊 Your positive energy</div>
+<div class="fade">🌸 Your amazing personality</div>
+</div>
+
+<button onclick="showPage(5)">Next</button>
+
+</div>
+
+<!-- PAGE 5 -->
+
+<div id="page5" class="page">
+
+<h1 class="title">Our Memories</h1>
+
+<div class="gallery">
+
+<div class="card"><img src="images/4.jpg"><div class="overlay">Your smile can brighten even the darkest day</div></div>
+<div class="card"><img src="images/5.jpg"><div class="overlay">Your beauty is as pure as your heart</div></div>
+<div class="card"><img src="images/6.jpeg"><div class="overlay">You make every moment feel special</div></div>
+<div class="card"><img src="images/7.jpeg"><div class="overlay">Your kindness makes you even more beautiful</div></div>
+<div class="card"><img src="images/8.jpeg"><div class="overlay">The world feels better when you smile</div></div>
+<div class="card"><img src="images/9.jpg"><div class="overlay">Your presence is pure happiness</div></div>
+<div class="card"><img src="images/10.jpeg"><div class="overlay">Every picture of you feels like a work of art</div></div>
+<div class="card"><img src="images/11.jpeg"><div class="overlay">You are the reason moments become memories</div></div>
+
+</div>
+
+<button onclick="showPage(6);startTyping()">Next</button>
+
+</div>
+
+<!-- PAGE 6 -->
+
+<div id="page6" class="page">
+
+<h1 class="title">Something From My Heart</h1>
+
+<div class="rowImages">
+<img src="images/12.jpg">
+<img src="images/13.jpg">
+</div>
+
+<div id="message" class="message"></div>
+
+<button onclick="showPage(7);celebrate()">Next</button>
+
+</div>
+
+<!-- PAGE 7 -->
+
+<div id="page7" class="page">
+
+<h1 class="title">Happy Birthday Humaira 🎂</h1>
+
+<p class="subtitle">May your life always be filled with happiness, love and beautiful moments ❤️</p>
+
+</div>
+
+<script>
+
+/* navigation */
+
+function showPage(page){
+
+document.querySelectorAll(".page").forEach(p=>p.style.display="none")
+
+document.getElementById("page"+page).style.display="flex"
+
+}
+
+/* start music */
+
+function startMusic(){
+document.getElementById("bgMusic").play()
+}
+
+/* typing message */
+
+const text=`Humaira, You are one of the most beautiful blessings that ever came into my life. Before you, my days were just normal, but after you became part of my world, everything started to feel more meaningful and bright. Your smile has the power to change my entire mood, and your presence brings a peace that I cannot find anywhere else. You are not just someone special to me, you are the person who makes my life feel complete.
+
+Every moment I spend with you becomes a memory that I treasure deeply. You support me, understand me, and make me feel stronger even on my difficult days. Sometimes I wonder what I did to deserve someone as caring and wonderful as you. You are not only my best friend, you are my happiness, and the most precious part of my life.
+
+On your birthday, I just want you to know that you mean more to me than words can ever express, and I will always cherish you.
+
+From your best friend
+Syed Zain`
+let i=0
+
+function startTyping(){
+
+let msg=document.getElementById("message")
+msg.innerHTML=""
+i=0
+
+function type(){
+
+if(i<text.length){
+msg.innerHTML+=text.charAt(i)
+i++
+setTimeout(type,40)
+}
+
+}
+
+type()
+
+}
+
+/* celebration */
+
+function celebrate(){
+
+confetti({particleCount:200,spread:120,origin:{y:0.6}})
+
+setInterval(()=>{
+
+let heart=document.createElement("div")
+heart.className="heart"
+heart.innerHTML="❤️"
+heart.style.left=Math.random()*100+"vw"
+
+document.body.appendChild(heart)
+
+setTimeout(()=>heart.remove(),6000)
+
+},500)
+
+}
+
+/* countdown */
+
+let birthday=new Date("March 7, 2026 00:00:00").getTime()
+
+let timer=setInterval(()=>{
+
+let now=new Date().getTime()
+
+let diff=birthday-now
+
+let d=Math.floor(diff/(1000*60*60*24))
+let h=Math.floor((diff%(1000*60*60*24))/(1000*60*60))
+let m=Math.floor((diff%(1000*60*60))/(1000*60))
+let s=Math.floor((diff%(1000*60))/1000)
+
+document.getElementById("timer").innerHTML=
+d+" Days "+h+" Hours "+m+" Minutes "+s+" Seconds"
+
+if(diff<0){
+
+clearInterval(timer)
+
+document.getElementById("timer").innerHTML="It's Time 🎉"
+
+document.getElementById("enterBtn").style.display="block"
+
+}
+
+},1000)
+
+document.getElementById("countdownPage").style.display="flex"
+
+</script>
+
+</body>
+</html>
